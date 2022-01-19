@@ -1,0 +1,22 @@
+﻿<resources>
+    <string name="app_name">Tip_Myself</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="tip_percent">
+        <item></item>
+        <item>5%</item>
+        <item>10%</item>
+        <item>15%</item>
+        <item>20%</item>
+    </string-array>
+
+    <string-array name="tip_transaction">
+        <item></item>
+        <item>Every debit</item>
+        <item>Send money</item>
+        <item>Airtime</item>
+        <item>Data Subscription</item>
+        <item>Bills Payment</item>
+    </string-array>
+
+</resources>

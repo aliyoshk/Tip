@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<androidx.constraintlayout.widget.ConstraintLayout
+	android:id="@+id/cl"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:background="#00555555"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/constraintLayout2"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="10dp"
+		android:layout_marginTop="40dp"
+		android:layout_marginEnd="10dp"
+		android:background="@color/white"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.49"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintVertical_bias="0.483">
+
+		<EditText
+			android:id="@+id/editText2"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+			android:layout_marginStart="131dp"
+			android:layout_marginTop="20dp"
+			android:layout_marginEnd="131dp"
+			android:background="@drawable/btn"
+			android:textAlignment="center"
+			android:hint="****"
+			android:textSize="30dp"
+			android:textColor="@color/white"
+			android:password="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/textView14"/>
+
+
+		<TextView
+			android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_marginStart="150dp"
+			android:layout_marginTop="20dp"
+			android:layout_marginEnd="150dp"
+			android:fontFamily="sans-serif-light"
+			android:hint="Enter Pin"
+			android:textSize="15dp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="@+id/view"/>
+
+		<TextView
+			android:id="@+id/trDia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_marginTop="50dp"
+			android:fontFamily="sans-serif-light"
+			android:text="You're about to make transfer"
+			android:textSize="15dp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"/>
+
+		<View
+			android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+			android:layout_margin="10dp"
+			android:background="#111111"
+			android:layout_marginStart="10dp"
+			android:layout_marginTop="30dp"
+			android:layout_marginEnd="10dp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0.0"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/trDia"/>
+
+		<View
+			android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+			android:layout_margin="10dp"
+			android:layout_marginStart="20dp"
+			android:layout_marginTop="40dp"
+			android:layout_marginEnd="10dp"
+			android:background="#111111"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0.0"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/editText2"/>
+   
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+	<ImageView
+		android:id="@+id/imageView9"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+		android:layout_marginTop="10dp"
+		android:src="@drawable/translogo"
+		app:layout_constraintEnd_toEndOf="@+id/constraintLayout2"
+		app:layout_constraintStart_toStartOf="@+id/constraintLayout2"
+		app:layout_constraintTop_toTopOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

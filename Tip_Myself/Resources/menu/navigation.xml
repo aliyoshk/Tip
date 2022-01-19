@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/airtime"
+        android:icon="@drawable/phone"
+        android:title="Airtime"
+        />
+
+    <item
+        android:id="@+id/payBills"
+        android:icon="@drawable/pay"
+        android:title="Pay Bills" />
+
+    <item
+        android:showAsAction="ifRoom"
+        android:id="@+id/transfer"
+        android:icon="@drawable/bank"
+        android:title="Transfer" />
+
+    <item
+        android:id="@+id/support"
+        android:icon="@drawable/support"
+        android:title="Support" />
+
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/settings"
+        android:title="Settings" />
+
+</menu>

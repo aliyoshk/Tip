@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:background="@drawable/trans_bg">
+
+	<ImageView
+		android:id="@+id/imageView7"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="25dp"
+		android:layout_marginStart="30dp"
+		android:src="@drawable/back"/>
+
+	<TextView
+		android:id="@+id/textView6"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:fontFamily="sans-serif-medium"
+		android:text="Send Money"
+		android:layout_gravity="center"
+		android:layout_marginTop="30dp"
+		android:textColor="#242424"
+		android:textSize="20sp"
+		android:textStyle="bold" />
+
+	<TextView
+		android:id="@+id/textView7"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="20dp"
+		android:layout_marginStart="30dp"
+		android:fontFamily="sans-serif-light"
+		android:text="Transfer from"
+		android:textColor="#242424"
+		android:textSize="12dp" />
+
+	<LinearLayout
+		android:id="@+id/linearLayout4"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="2dp"
+		android:background="@drawable/tip_btn"
+		android:padding="8dp"
+		android:layout_gravity="center"
+		android:orientation="horizontal">
+
+		<TextView
+			android:id="@+id/acct_no"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@drawable/btn"
+			android:textColor="#ffffff"
+			android:padding="4dp"
+			android:layout_marginStart="15dp"
+			android:text="1234561012 | TIER 3"
+			android:textSize="10dp" />
+		<RadioGroup
+			android:id="@+id/pri"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+		<RadioButton
+			android:imeActionId="@+id/priAccount"
+			android:id="@+id/fromAccount"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="210dp"
+			android:fontFamily="sans-serif-light"
+			android:textAllCaps="true"
+			android:textColor="#111111"
+			android:textSize="15sp" />
+		</RadioGroup>
+	</LinearLayout>
+		<TextView
+		android:id="@+id/textView8"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:fontFamily="sans-serif-light"
+		android:text="Balance: ₦ 250,000.58"
+		android:textColor="#242424"
+		android:layout_marginStart="30dp"
+		android:textStyle="bold"
+		android:textSize="13dp"/>
+
+
+		<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="20dp"
+		android:layout_marginStart="30dp"
+		android:fontFamily="sans-serif-light"
+		android:text="Transfer to"
+		android:textColor="#242424"
+		android:textSize="12dp" />
+	<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+		android:background="@drawable/tip_btn"
+		android:layout_marginTop="4dp"
+		android:layout_marginStart="30dp"
+		android:layout_marginEnd="30dp"
+		android:layout_gravity="center">
+
+		<TextView
+			android:id="@+id/talacAcct"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="TALAT Account"
+			android:layout_marginTop="5dp"
+			android:drawableLeft="@drawable/talat"
+			android:drawablePadding="20dp"
+			android:textColor="#242424"/>
+
+			<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="10dp"
+			android:text="Other Banks"
+			android:layout_alignParentBottom="true"
+			android:drawableLeft="@drawable/others"
+			android:drawablePadding="20dp"
+			android:textColor="#242424"/>
+
+		<RadioGroup
+		android:id="@+id/radioGroup"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="190dp"	
+		android:layout_toEndOf="@+id/talacAcct">
+
+			<RadioButton
+				android:id="@+id/rdbTalat"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:fontFamily="sans-serif-light"
+				android:textAllCaps="true"
+				android:textColor="#111111"
+				android:textSize="15sp" />
+
+			<RadioButton
+				android:id="@+id/rdbOthers"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:fontFamily="sans-serif-light"
+				android:textAllCaps="true"
+				android:textSize="15sp" />
+		</RadioGroup>
+	</RelativeLayout>
+
+	<TextView
+		android:id="@+id/textView9"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="20dp"
+		android:layout_marginStart="30dp"
+		android:fontFamily="sans-serif-light"
+		android:text="Amount to send"
+		android:textColor="#242424"
+		android:textSize="12dp" />
+
+	<LinearLayout
+		android:id="@+id/linearLayout6"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="2dp"
+		android:layout_marginStart="30dp"
+		android:layout_marginEnd="30dp"
+		android:background="@drawable/tip_btn">
+
+		<EditText
+			android:id="@+id/amountToSend"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:backgroundTint="#00000000"
+			android:layout_marginStart="15dp"
+			android:inputType="numberDecimal"
+			android:hint="₦ 0.00"/>
+	</LinearLayout>
+
+
+	<TextView
+		android:id="@+id/textView10"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
+		android:fontFamily="sans-serif-light"
+		android:text="Enter account number"
+		android:layout_marginStart="30dp"
+		android:textColor="#242424"
+		android:textSize="12dp"/>
+
+	<LinearLayout
+		android:id="@+id/linearLayout7"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="2dp"
+		android:layout_marginStart="30dp"
+		android:layout_marginEnd="30dp"
+		android:background="@drawable/tip_btn">
+
+		<EditText
+			android:id="@+id/acctNoInput"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:drawableRight="@drawable/acct_number"
+			android:layout_marginStart="15dp"
+			android:drawablePadding="130dp"
+			android:inputType="number"
+			android:backgroundTint="#00000000"
+			android:hint="Enter account number" />
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/hide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+		android:orientation="vertical">
+		<LinearLayout
+		android:id="@+id/linearLayout8"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="15dp"
+		android:layout_marginStart="30dp"
+		android:layout_marginEnd="30dp"
+		android:background="@drawable/tip_btn"
+		android:orientation="vertical">
+
+		<TextView
+			android:id="@+id/st"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="15dp"
+			android:fontFamily="sans-serif-light"
+			android:text="Account Name"
+			android:textColor="#242424"
+			android:textSize="13dp"
+			android:textStyle="bold" />
+
+		<TextView
+			android:id="@+id/acctDetails"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="15dp"
+			android:fontFamily="sans-serif-light"
+			android:textSize="12dp"
+			android:textColor="#242424"
+			android:text="Account Number" />
+		<RadioButton
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="15dp"
+			android:text="Save to my beneficiaries" />
+	</LinearLayout>
+
+	<TextView
+		android:id="@+id/textView11"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="15dp"
+		android:layout_marginStart="30dp"
+		android:fontFamily="sans-serif-light"
+		android:text="Description (optional)"
+		android:textColor="#242424"
+		android:textSize="11dp"/>
+
+	<LinearLayout
+		android:id="@+id/linearLayout5"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:layout_marginTop="2dp"
+		android:layout_marginStart="30dp"
+		android:layout_marginEnd="30dp"
+		android:background="@drawable/tip_btn">
+
+		<EditText
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="10dp"
+			android:paddingLeft="15dp"
+			android:drawableLeft="@drawable/chat"
+			android:drawablePadding="10dp"
+			android:backgroundTint="#00000000"
+			android:hint="Message" />
+	</LinearLayout>
+
+ </LinearLayout>
+
+	<CheckBox
+		android:id="@+id/tipUncheck"
+		android:pointerIcon="zoom_out"
+		android:layout_marginStart="170dp"
+		android:layout_marginTop="15dp"
+		android:textColor="#242424"
+		android:checked="true"
+		android:buttonTint="#AB2656"
+		android:text="Disable Tip for this transaction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+	<Button
+		android:id="@+id/btn_makeTransfer"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="20dp"
+		android:background="@drawable/btn"
+		android:layout_gravity="center"
+		android:text="Make transfer"
+		android:textColor="@color/white"
+		android:paddingLeft="90dp"
+		android:paddingRight="90dp"/>
+
+
+</LinearLayout>
