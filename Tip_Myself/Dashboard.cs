@@ -85,14 +85,16 @@ namespace Tip_Myself
 
             wallet.Click += delegate
             {
-                Intent intent = new Intent(this, typeof(Enable_Tip));
-                StartActivity(intent);
+                Toast.MakeText(this, "E-Wallet Feature unavailable, check back later", ToastLength.Short).Show();
+                //Intent intent = new Intent(this, typeof(Enable_Tip));
+                //StartActivity(intent);
             };
 
             card.Click += delegate
             {
-                Intent i = new Intent(this, typeof(TipDashboard));
-                StartActivity(i);
+                Toast.MakeText(this, "Card Request Feature unavailable, check back later", ToastLength.Short).Show();
+                //Intent i = new Intent(this, typeof(TipDashboard));
+                //StartActivity(i);
             };
 
             BottomNavigationView bottomNavigation = FindViewById<BottomNavigationView>(Resource.Id.bottom_navigation);
@@ -166,7 +168,6 @@ namespace Tip_Myself
                     }
                 }
             }
-
         }
     }
 }

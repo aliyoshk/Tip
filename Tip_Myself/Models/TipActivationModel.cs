@@ -44,7 +44,7 @@ namespace Tip_Myself.Models
         public TipActivationResponseModel()
         {
         }
-
+        public int walletId { get; set; }
         public string acctNumber { get; set; }
         public decimal walletBalance { get; set; }
         public bool tipStatus { get; set; }
@@ -53,6 +53,20 @@ namespace Tip_Myself.Models
     }
 
 
- 
+    [Serializable]
+    public class WalletDetails
+    {
+        public WalletDetails()
+        {
+        }
+        public int walletId { get; set; }
+        public string acctNumber { get; set; }
+        public decimal walletBalance { get; set; }
+        public bool tipStatus { get; set; }
+        public string tipPercent { get; set; }
+
+    }
+
+
 
 }

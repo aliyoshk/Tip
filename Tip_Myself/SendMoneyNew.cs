@@ -9,6 +9,7 @@ using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
+using Android.Views.InputMethods;
 using Android.Widget;
 using Newtonsoft.Json;
 using Tip_Myself.Models;
@@ -29,6 +30,9 @@ namespace Tip_Myself
         ImageView back;
         TextView acctDetails;
         CheckBox tipUncheck;
+        TextView sAcctName, sAcctNo;
+        LinearLayout hide, hide2;
+        private ProgressDialog progress;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -48,9 +52,16 @@ namespace Tip_Myself
             priAccount = FindViewById<RadioButton>(Resource.Id.priAccount);
             acctDetails = FindViewById<TextView>(Resource.Id.acctDetails);
             tipUncheck = FindViewById<CheckBox>(Resource.Id.tipUncheck);
-
-
+            sAcctName = FindViewById<TextView>(Resource.Id.sAcctName);
+            sAcctNo = FindViewById<TextView>(Resource.Id.sAcctNo);
             back = FindViewById<ImageView>(Resource.Id.imageView7);
+            hide = FindViewById<LinearLayout>(Resource.Id.hide);
+            hide2 = FindViewById<LinearLayout>(Resource.Id.linearLayout6);
+
+            progress = new ProgressDialog(this);
+            progress.SetCancelable(false);
+            progress.SetMessage("Please wait..");
+            progress.SetTitle("Loading.");
 
             back.Click += delegate
             {
@@ -65,6 +76,26 @@ namespace Tip_Myself
                 acct_bal.Text = user.acctBalance.ToString();
                 acct_no.Text = user.acctNumber + " |  TIER 3";
             }
+
+            acctNoInput.KeyPress += (object sender, View.KeyEventArgs e) =>
+            {
+                e.Handled = false;
+                if (e.Event.Action == KeyEventActions.Down && e.KeyCode == Keycode.Enter && acctNoInput.Text.ToString().Trim().Length == 10)
+                {
+                    //your logic here
+
+                    var acct = acctNoInput.Text.ToString();
+                    //hide.Visibility = ViewStates.Visible;
+
+                    validateAccountNumber(acct);
+                    e.Handled = true;
+                }
+                else
+                {
+                    e.Handled = false;
+                }
+            };
+
 
 
             btn.Click += delegate
@@ -117,16 +148,37 @@ namespace Tip_Myself
         }
 
 
+        private async void validateAccountNumber(string enterAccNum)
+        {
+            var reult = await NetworkUtil.GetGeneralAsycTip("Users/UserDetails", "acctNum", enterAccNum);
+            if (!string.IsNullOrEmpty(reult))
+            {
+                var result = JsonConvert.DeserializeObject<LoginResponseModel>(reult);
+                if (result != null)
+                {
+                    if (acctNoInput.Text == result.acctNumber)
+                    {
+                        hide2.Visibility = ViewStates.Visible;
+                        hide.Visibility = ViewStates.Visible;
+                        sAcctName.Text = result.acctName;
+                        sAcctNo.Text = result.acctNumber;
+                    }
+                }
+
+            }
+            else
+            {
+                //Util.showDialog("Please try again", "Invalid Account", this);
+                hide2.Visibility = ViewStates.Invisible;
+                hide.Visibility = ViewStates.Invisible;
+                Toast.MakeText(this, "Invalid Account Number", ToastLength.Short).Show();
+            }
+        }
+
+
         public bool Empty()
         {
             int isSelected = radioGroup.CheckedRadioButtonId;
-            int acct = pri.CheckedRadioButtonId;
-
-            if (acct == -1)
-            {
-                Toast.MakeText(this, "Choose your Primary Account", ToastLength.Short).Show();
-                return true;
-            }
 
             if (isSelected == -1)
             {
@@ -161,6 +213,7 @@ namespace Tip_Myself
 
         private async void validateActivation(string toAccount, decimal amount, string transactionPin)
         {
+            progress.Show();
             var user = MemoryManager.Instance(this).getUser("LoginResponseModel");
             if (user != null)
             {
@@ -174,16 +227,24 @@ namespace Tip_Myself
                     if (mm != null)
                     {
                         MemoryManager.Instance(this).setSendMoney("SendMoneyResponseModel", mm);   //added to save transaction status
-                        Toast.MakeText(this, "Transferred Successfully", ToastLength.Long).Show();
-                        Finish();
-
-                        //string send1 = JsonConvert.SerializeObject(mm);                    }
+                        //Toast.MakeText(this, "Transferred Successfully", ToastLength.Long).Show();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.SetCancelable(false)
+                           .SetMessage("Transfer Successful")
+                           .SetMessage("Your transfer of ₦" + amount + " is Successful")
+                           .SetNegativeButton("Ok", delegate
+                           {
+                               builder.Dispose();
+                               Finish();
+                           });
+                        builder.Show();
 
                     }
                 }
             }
-
+            progress.Dismiss(); 
 
         }
+
     }
 }

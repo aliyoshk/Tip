@@ -32,18 +32,19 @@ namespace Tip_Myself
             this.lists = list;
           
         }
-        
-        public override int ItemCount => lists == null ? 0 : lists.Count;
+
+        //public override int ItemCount => lists == null ? 0 : lists.Count;
+        public override int ItemCount => lists.Count;
 
 
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
             TransactionAdapterHolder transactionAdapter = holder as TransactionAdapterHolder;
-            transactionAdapter.refs.Text = lists[position].RefId;
-            transactionAdapter.date.Text = lists[position].Date;
-            transactionAdapter.amount.Text = lists[position].Amount.ToString();
-            transactionAdapter.source.Text = lists[position].Source;
-            transactionAdapter.destination.Text = lists[position].Desination;
+            transactionAdapter.refs.Text = "Reference ID :"+ lists[position].RefId;
+            transactionAdapter.date.Text = "Date :" + lists[position].Date;
+            transactionAdapter.amount.Text = "Amount : ₦" + lists[position].Amount.ToString();
+            transactionAdapter.source.Text = "Source Account :" + lists[position].Source;
+            transactionAdapter.destination.Text = "Beneficiary :" + lists[position].Desination;
 
         }
 
@@ -52,6 +53,12 @@ namespace Tip_Myself
             LayoutInflater inflater = LayoutInflater.From(parent.Context);
             View view = inflater.Inflate(Resource.Layout.transactionAdapter, parent, false);
             return new TransactionAdapterHolder(view);
+        }
+
+        internal void swapData(List<TransactionList> lists)
+        {
+            this.lists = lists;
+            NotifyDataSetChanged();
         }
     }
 

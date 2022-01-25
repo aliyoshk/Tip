@@ -23,4 +23,26 @@ namespace Tip_Myself
             
         }
     }
+
+    public class TipHistoryList
+    {
+        public decimal Amount { get; set; }
+        public decimal TipAmount { get; set; }
+        public string TipPercent { get; set; }
+        public string Date { get; set; }
+
+        public TipHistoryList(decimal Amount, decimal TipAmount, string TipPercent, string Date)
+        {
+            this.Amount = Amount;
+            this.TipAmount = TipAmount;
+            this.TipPercent = TipPercent;
+            this.Date = Date;
+        }
+
+        public TipHistoryList()
+        {
+
+        }
+
+    }
 }

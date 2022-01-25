@@ -15,7 +15,7 @@ using Tip_Myself.Models;
 
 namespace Tip_Myself
 {
-    [Activity(Label = "Registration")]
+    [Activity(Label = "Registration", NoHistory = true)]
     public class Registration : Activity
     {
         EditText fname, sname, email, pin, password;
@@ -122,11 +122,6 @@ namespace Tip_Myself
                 Toast.MakeText(this, "Agree with policy", ToastLength.Short).Show();
                 return true;
             }
-            else
-            {
-                validateLogin(fn, sn, em, pn, ps);
-                fn=""; sn = ""; em=""; pn=""; ps="";
-            }
 
             return false;
         }
@@ -146,9 +141,19 @@ namespace Tip_Myself
                 {
                     string lo1g = JsonConvert.SerializeObject(mm);
                     Toast.MakeText(this, "Account Created Successful", ToastLength.Short).Show();
-                    Intent intent = new Intent(this, typeof(Login));
-                    StartActivity(intent);
+                    
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.SetCancelable(false)
+                       .SetMessage("Registration Successful")
+                       .SetPositiveButton("Login", delegate
+                       {
+                           Intent intent = new Intent(this, typeof(Login));
+                           StartActivity(intent);
+                       });
+
+                    builder.Show();
                 }
+
             }
 
             progress.Dismiss();

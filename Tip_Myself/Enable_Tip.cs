@@ -131,21 +131,12 @@ namespace Tip_Myself
                     var mm = JsonConvert.DeserializeObject<TipActivationResponseModel>(mResult);
                     if (mm != null)
                     {
-                        //MemoryManager.Instance(this).setTipStatus("TipActivationResponseModel", mm);
                         if (mm.tipStatus)
                         {
                             MemoryManager.Instance(this).setTipStatus("TipActivationResponseModel", mm);
                             Toast.MakeText(this, "Tip Activated Successfully", ToastLength.Long).Show();
                             
                         }
-                        /*
-                         *  string tog1 = JsonConvert.SerializeObject(mm);
-                      Intent intent = new Intent(this, typeof(TipDashboard));
-
-                      intent.PutExtra("TipActResponseModelK", tog1);
-                      StartActivity(intent);
-                         */
-                        // Finish();
                     }
                 }
             }
@@ -167,7 +158,6 @@ namespace Tip_Myself
                     var mm = JsonConvert.DeserializeObject<TipActivationResponseModel>(mResult);
                     if (mm != null)
                     {
-                        //MemoryManager.Instance(this).setTipStatus("TipActivationResponseModel", mm);
                         if (mm.tipStatus)
                         {
                             MemoryManager.Instance(this).setTipStatus("TipActivationResponseModel", mm);

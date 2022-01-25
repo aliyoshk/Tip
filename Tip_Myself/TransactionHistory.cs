@@ -30,7 +30,6 @@ namespace Tip_Myself
         RecyclerView.LayoutManager layoutManger;
 
         List<TransactionList> lists = new List<TransactionList>();
-        decimal am;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -65,9 +64,21 @@ namespace Tip_Myself
                 var mResult = await NetworkUtil.GetGeneralAsycTip("Transactions/TransactionHistory", "AcctNumber", user.acctNumber);
                 if (!string.IsNullOrEmpty(mResult))
                 {
-                    var mm = JsonConvert.DeserializeObject<HistoryResponseModel>(mResult);
+                    var mm = JsonConvert.DeserializeObject<List<HistoryResponseModel>>(mResult);
 
-                  
+                  foreach (var item in mm)
+                    {
+                        lists.Add(new TransactionList()
+                        {
+                            RefId = item.transactionUniqueReference,
+                            Amount = item.transactionAmount,
+                            Desination = item.transactionDestinationAccount,
+                            Source = item.transactionSourceAccount,
+                            Date = DateTime.Parse(item.transactionDate).ToString("MM/dd/yyyy hh:mm tt")
+                        });
+                    }
+                    adapter.swapData(lists);
+                    adapter.NotifyDataSetChanged();
                         /*if (mm != null)
                         {
                             /*TransactionList l = new TransactionList();
@@ -76,13 +87,7 @@ namespace Tip_Myself
                             l.Source = mm.transactionSourceAccount;
                             l.RefId = mm.transactionUniqueReference;*/
 
-                        lists.Add(new TransactionList()
-                        {
-                            RefId = mm.transactionUniqueReference,
-                            Amount = mm.transactionAmount,
-                            Desination = mm.transactionDestinationAccount,
-                            Source = mm.transactionSourceAccount
-                        });
+                      
 
                         //lists.Add(l); 
 
@@ -92,6 +97,3 @@ namespace Tip_Myself
         }
 
     }
-
-
-//public TransactionList(string RefId, decimal Amount, string Source, String Destination, DateTime Date)

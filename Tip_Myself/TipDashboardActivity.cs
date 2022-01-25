@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -25,7 +25,14 @@ namespace Tip_Myself
         Spinner percent, tipChoice;
         ImageView bck;
         private string tipPercent;
+        TextView viewHistory;
 
+
+        /*protected override void OnResume()
+        {
+            base.OnResume();
+            getTipDetails();
+        }*/
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -41,21 +48,29 @@ namespace Tip_Myself
             percent = FindViewById<Spinner>(Resource.Id.percent);
             tipChoice = FindViewById<Spinner>(Resource.Id.tipChoice);
             bck = FindViewById<ImageView>(Resource.Id.bck);
-            HoldActivationDetails();
+            viewHistory = FindViewById<TextView>(Resource.Id.viewHistory);
+
+            _ = getTipDetails(); //this method set all the wallet details onto the dashboard
+
+            //HoldActivationDetails(); //shows the data hold which the user sets switch and percent
+
+
+
+     
 
             bck.Click += delegate {
                 Intent intent = new Intent(this, typeof(Dashboard));
                 StartActivity(intent);
            	};
 
-            var user = MemoryManager.Instance(this).getTip("TipActivationResponseModel");
-            if (user != null)
+            viewHistory.Click += delegate
             {
-                status.Text = user.tipStatus.ToString();
-                walletBalance.Text = "₦ " + user.walletBalance.ToString();
-                percentage.Text = user.tipPercent + "%";
-                
-            }
+                Intent intent = new Intent(this, typeof(TipHistory));
+                StartActivity(intent);
+            };
+
+
+
 
 
             percent.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(percent_ItemSelected);
@@ -76,19 +91,20 @@ namespace Tip_Myself
                 if (isChecked)
                 {
                     // The toggle is enabled
-                    Toast.MakeText(this, "Tip Activated", ToastLength.Short).Show();
+                    //Toast.MakeText(this, "Tip Activated", ToastLength.Short).Show();
                     hide.Visibility = ViewStates.Visible;
-                    ToActivateTipPercent(true, 0.ToString());
+                    //ToActivateTipPercent(true, 0.ToString());
                 }
                 else
                 {
-                    if (hide.Visibility == ViewStates.Visible)
+                    /*if (hide.Visibility == ViewStates.Visible)
                     {
                         ToActivateTipPercent(false, 0.ToString());
-                    }
+                    }*/
 
                     // The toggle is disabled
                     hide.Visibility = ViewStates.Invisible;
+                    ToActivateTipPercent(false, 0.ToString());
                 }
             };
 
@@ -99,15 +115,15 @@ namespace Tip_Myself
         {
             Spinner spinner = (Spinner)sender;
             tipPercent = spinner.GetItemAtPosition(e.Position).ToString();//tipPercent
-            string toast = string.Format("Your Percent is ", spinner.GetItemAtPosition(e.Position));
-            Toast.MakeText(this, toast, ToastLength.Long).Show();
+            //string toast = string.Format("Your Percent is ", spinner.GetItemAtPosition(e.Position));
+            //Toast.MakeText(this, toast, ToastLength.Long).Show();
         }
 
         private void tipChoice_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
         {
             Spinner spinner = (Spinner)sender;
-            string toast = string.Format("Your Selection is on", spinner.GetItemAtPosition(e.Position));
-            Toast.MakeText(this, toast, ToastLength.Long).Show();
+            //string toast = string.Format("Your Selection is on", spinner.GetItemAtPosition(e.Position));
+            //Toast.MakeText(this, toast, ToastLength.Long).Show();
 
             if (hide.Visibility == ViewStates.Visible)
             {
@@ -117,7 +133,33 @@ namespace Tip_Myself
         }
 
 
-        private async void validateActivation(bool tipStatus)
+        /*private async void validateActivation(bool tipStatus, string tipPercent)
+        {
+            var nu = tipPercent;
+            var hh = nu.Replace("%", "");
+            var user = MemoryManager.Instance(this).getUser("LoginResponseModel");
+            if (user != null)
+            {
+                TipActivationModel tipActivation = new TipActivationModel() { tipStatus = tipStatus, tipPercent = hh };
+                string tog = JsonConvert.SerializeObject(tipActivation);
+                var mResult = await NetworkUtil.PostGeneralAsycTip("TipWallet/ToggleTipMyself", tog, "acctNum", user.acctNumber);
+                if (!string.IsNullOrEmpty(mResult))
+                {
+                    var mm = JsonConvert.DeserializeObject<TipActivationResponseModel>(mResult);
+                    if (mm != null)
+                    {
+                        if (mm.tipStatus)
+                        {
+                            MemoryManager.Instance(this).setTipStatus("TipActivationResponseModel", mm);
+                            Toast.MakeText(this, "Tip Activated Successfully", ToastLength.Long).Show();
+
+                        }
+                    }
+                }
+            }
+        }*/
+
+        /*private async void validateActivation(bool tipStatus)
         {
             var user = MemoryManager.Instance(this).getUser("LoginResponseModel");
             if (user != null)
@@ -140,9 +182,11 @@ namespace Tip_Myself
                     }
                 }
             }
-        }
+        }*/
 
-        private async void ToActivateTipPercent(bool tipStatus, string tipPercent)
+
+
+        /*private async void ToActivateTipPercent(bool tipStatus, string tipPercent)
         {
             var nu = tipPercent;
             var hh = nu.Replace("%", "");
@@ -157,7 +201,6 @@ namespace Tip_Myself
                     var mm = JsonConvert.DeserializeObject<TipActivationResponseModel>(mResult);
                     if (mm != null)
                     {
-                        //MemoryManager.Instance(this).setTipStatus("TipActivationResponseModel", mm);
                         if (mm.tipStatus)
                         {
                             MemoryManager.Instance(this).setTipStatus("TipActivationResponseModel", mm);
@@ -207,7 +250,91 @@ namespace Tip_Myself
                                 }
                             }
 
+                        }*/
+        //..............Holding Spinner and Switch State....................
+
+        //private method of your class
+        private int getIndex(Spinner spinner, string myString)
+        {
+            for (int i = 0; i < spinner.Count; i++)
+            {
+                if (spinner.GetItemAtPosition(i).ToString().Equals(myString))
+                {
+                    return i;
+                }
+            }
+
+            return 0;
+        }
+        //.......End of Spinner and Switch State Holder...............
+
+
+
+        //..............Settings Dashboard details....................
+        private async Task getTipDetails()
+        {
+            var user = MemoryManager.Instance(this).getUser("LoginResponseModel");
+            if (user != null)
+            {
+                WalletDetails walletDetails = new WalletDetails() { };
+                string details = JsonConvert.SerializeObject(walletDetails);
+                var mResult = await NetworkUtil.GetGeneralAsycTip("Users/WalletDetail", "acctNumber", user.acctNumber);
+                if (!string.IsNullOrEmpty(mResult))
+                {
+                    var mm = JsonConvert.DeserializeObject<TipActivationResponseModel>(mResult);
+                    if (mm != null)
+                    {
+                        bool st = false;
+                        if (mm.tipStatus == st)
+                        {
+                            status.Text = "Inactive";
+                            switch1.Checked = false;
                         }
+                        else
+                        {
+                            status.Text = "Active";
+                            switch1.Checked = true;
+                            Toast.MakeText(this, "Tip is Active", ToastLength.Short).Show();
+                        }
+
+                        //status.Text = mm.tipStatus.ToString();
+                        walletBalance.Text = "₦ " + mm.walletBalance.ToString("N0");
+                        percentage.Text = mm.tipPercent + "%";
+                        percent.SetSelection(getIndex(percent, mm.tipPercent + "%")); // holding the percent of the spinner
+                    }
+                }
+            }
+       
+        }//.......End of Tip Dashboard Settings...............
+
+
+
+        //..............Settings WalletToggleStatus details....................
+        private async void ToActivateTipPercent(bool tipStatus, string tipPercent)
+        {
+            var nu = tipPercent;
+            var hh = nu.Replace("%", "");
+            var user = MemoryManager.Instance(this).getUser("LoginResponseModel");
+            if (user != null)
+            {
+                TipActivationModel tipActivation = new TipActivationModel() { tipStatus = tipStatus, tipPercent = hh };
+                string tog = JsonConvert.SerializeObject(tipActivation);
+                var mResult = await NetworkUtil.PostGeneralAsycTip("TipWallet/ActivateStatus", tog, "acctNum", user.acctNumber);
+                if (!string.IsNullOrEmpty(mResult))
+                {
+                    var mm = JsonConvert.DeserializeObject<TipActivationResponseModel>(mResult);
+                    if (mm != null)
+                    {
+                        if (mm.tipStatus)
+                        {
+                            MemoryManager.Instance(this).setTipStatus("TipActivationResponseModel", mm);
+                            Toast.MakeText(this, "Tip Successfully Activated", ToastLength.Long).Show();
+                        }
+                    }
+                }
+            }
+
+        }//.......End of WalletToggleStatus  Settings...............
 
     }
 }
