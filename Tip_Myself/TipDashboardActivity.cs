@@ -10,6 +10,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using AndroidX.SwipeRefreshLayout.Widget;
 using Newtonsoft.Json;
 using Tip_Myself.Models;
 using Tip_Myself.Utils;
@@ -19,6 +20,7 @@ namespace Tip_Myself
     [Activity(Label = "TipDashboardActivity")]
     public class TipDashboardActivity : Activity
     {
+        SwipeRefreshLayout swipe;
         LinearLayout hide;
         TextView walletBalance, status, percentage;
         Switch switch1;
@@ -32,6 +34,12 @@ namespace Tip_Myself
         {
             base.OnResume();
             getTipDetails();
+        }*/
+
+        /*public void Swipe_Refresh()
+        {
+            swipe.Refreshing = false;
+            _ = getTipDetails();
         }*/
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -54,9 +62,13 @@ namespace Tip_Myself
 
             //HoldActivationDetails(); //shows the data hold which the user sets switch and percent
 
+            swipe = FindViewById<SwipeRefreshLayout>(Resource.Id.swipe);
+            swipe.SetColorSchemeResources(Resource.Color.abc_background_cache_hint_selector_material_dark, Resource.Color.abc_color_highlight_material,
+                Resource.Color.abc_hint_foreground_material_dark, Resource.Color.abc_primary_text_material_dark);
+            swipe.Refresh += Swipe_Refresh;
 
 
-     
+
 
             bck.Click += delegate {
                 Intent intent = new Intent(this, typeof(Dashboard));
@@ -110,6 +122,11 @@ namespace Tip_Myself
 
         }
 
+        private void Swipe_Refresh(object sender, EventArgs e)
+        {
+            swipe.Refreshing = false;
+            _ = getTipDetails();
+        }
 
         private void percent_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
         {
